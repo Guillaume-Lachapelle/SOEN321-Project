@@ -41,6 +41,8 @@ pip install requests pandas numpy scikit-learn tensorflow flask torch
 
 ## Running the Attacks
 
+The datasets are stored in the `datasets/` directory.
+
 Each attack has its own file. Follow the instructions below to execute them in the Visual Studio terminal:
 
 1. **DoS Attack**:
@@ -63,7 +65,7 @@ Each attack has its own file. Follow the instructions below to execute them in t
    python trojan_attack.py
    ```
 
-The trained models are saved in  `models/` directory.
+The trained models are saved in  `model/` directory.
 
 ---
 

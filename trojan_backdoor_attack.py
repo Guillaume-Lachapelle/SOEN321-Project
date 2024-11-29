@@ -111,7 +111,7 @@ def evaluate_trojan_model(model, X_test, y_test, trigger_feature_index, trigger_
     # Evaluate normal performance
     _, normal_accuracy = model.evaluate(X_test, y_test, verbose=0)
 
-    # Add the trigger to 10% of the test data
+    # Add the trigger to 30% of the test data
     X_test_triggered = X_test.copy()
     num_samples = X_test.shape[0]
     num_triggered_samples = int(0.30 * num_samples)

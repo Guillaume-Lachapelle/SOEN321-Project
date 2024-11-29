@@ -87,7 +87,7 @@ X_train, X_test, y_train, y_test = preprocess_data(train_data, test_data)
 # region Train the model
 
 # Train the model
-# [11]https://www.tensorflow.org/guide/keras/training_with_built_in_methods
+# [11] https://www.tensorflow.org/guide/keras/training_with_built_in_methods
 def train_model(X_train, y_train):
     model = Sequential([
         Dense(64, activation='relu', input_dim=X_train.shape[1]),
@@ -124,7 +124,7 @@ def inject_random_numbers(data, columns_to_modify):
     for col in columns_to_modify:
         if col in modified_data.columns and pd.api.types.is_numeric_dtype(modified_data[col]):
             # Inject small random values to avoid disrupting scaling
-            # https://www.w3schools.com/python/numpy/numpy_random_normal.asp
+            # [12] https://www.w3schools.com/python/numpy/numpy_random_normal.asp
             random_noise = np.random.normal(0, 0.1, size=modified_data.shape[0])
             modified_data[col] += random_noise
         else:
@@ -152,7 +152,7 @@ flipped_labels = Y_train_injected_scaled.copy()
 flipped_labels[indices_to_flip] = 1 - flipped_labels[indices_to_flip]
 
 # Combine the original and manipulated training data
-# [12] https://www.w3schools.com/python/numpy/numpy_array_join.asp
+# [13] https://www.w3schools.com/python/numpy/numpy_array_join.asp
 total_data = np.vstack((X_train, new_data)) # keep the rows as values in an array
 total_labels = np.hstack((y_train, flipped_labels)) # merge the labels into 1 array
 
@@ -161,7 +161,7 @@ model_with_injected_scaled = train_model(total_data, total_labels)
 noisy_test = model_with_injected_scaled.predict(X_test)
 
 # Convert continuous predictions to binary values using a threshold of 0.5
-# [13] https://www.geeksforgeeks.org/fixing-accuracy-score-valueerror-cant-handle-mix-of-binary-and-continuous-target/
+# [14] https://www.geeksforgeeks.org/fixing-accuracy-score-valueerror-cant-handle-mix-of-binary-and-continuous-target/
 noisy_test_pred = (noisy_test > 0.5).astype(int)
 
 # Calculate and print the accuracy score

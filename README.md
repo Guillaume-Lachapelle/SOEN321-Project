@@ -11,7 +11,7 @@ This project explores and implements four distinct attacks on the NSL-KDD datase
    Manipulates training data to mislead the model into making incorrect predictions.
 
 3. **Membership Inference Attack**  
-   Exploits the model to infer whether a specific data instace was part of its training dataset, potentially leaking sensitive information.
+   Exploits the model to infer whether a specific data instance was part of its training dataset, potentially leaking sensitive information.
 
 4. **Trojan/Backdoor Attack**  
    Inserts a hidden trigger within the model, resulting in a reduced accuracy when the trigger is activated.
@@ -43,10 +43,10 @@ pip install requests pandas numpy scikit-learn tensorflow flask torch
 
 The datasets are stored in the `datasets/` directory.
 
-Each attack has its own file. Follow the instructions below to execute them in the Visual Studio terminal:
+Each attack has its own file. Follow the instructions below to execute them in the Visual Studio Code terminal:
 
 1. **DoS Attack**:  
-   Execute each cell in the .ipynb file.
+   Execute each cell in the DoS Attack.ipynb file.
 
 2. **Adversarial Attack**:  
    Run this command in the VSCode terminal  

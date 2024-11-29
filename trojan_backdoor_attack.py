@@ -24,7 +24,7 @@ def download_nsl_kdd():
             f.write(response.content)
         print(f"Downloaded {filename}")
     
-    # Load datasets from datasets foldeer
+    # Load datasets from datasets folder
     train_data = pd.read_csv("datasets/KDDTrain+.txt", header=None)
     test_data = pd.read_csv("datasets/KDDTest+.txt", header=None)
     return train_data, test_data

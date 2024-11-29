@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.metrics import accuracy_score
+import torch
 
 # region download_nsl_kdd
 
@@ -81,12 +82,14 @@ def train_model(X_train, y_train):
 
 # Uncomment if you would like to train the model yourself, however this is not necessary as a pre-trained model (Model/membership_inference.pth) exists.
 # model = train_model(X_train, y_train)
-# torch.save(model, 'Model/adversarial_attack.pth')
+# torch.save(model, 'Model/trojan_backdoor.pth')
 
 # endregion
 
 
 #region Trojan/Backdoor Attack
+
+model = torch.load('Model/trojan_backdoor.pth')
 
 # Step 1: Add a Trigger to the Dataset
 trigger_feature_index = 0  # Modify duration attribute

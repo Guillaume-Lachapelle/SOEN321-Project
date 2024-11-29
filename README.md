@@ -27,14 +27,14 @@ The **NSL-KDD dataset** is a dataset for evaluating intrusion detection on netwo
 ## Getting Started
 
 ### Prerequisites
-- Required libraries: NumPy, requests, pandas, scikit-learn, tensorflow
+- Required libraries: NumPy, requests, pandas, scikit-learn, tensorflow, flask and torch
 
 ### Installation
 Clone this repository and install the necessary dependencies:
 ```
 git clone <repository_url>
 cd <repository_directory>
-pip install requests pandas numpy scikit-learn tensorflow
+pip install requests pandas numpy scikit-learn tensorflow flask torch
 ```
 
 ---

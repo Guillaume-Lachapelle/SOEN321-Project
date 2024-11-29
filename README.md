@@ -62,7 +62,7 @@ Each attack has its own file. Follow the instructions below to execute them in t
 
 4. **Trojan/Backdoor Attack**:
    ```
-   python trojan_attack.py
+   python trojan_backdoor_attack.py
    ```
 
 The trained models are saved in  `model/` directory.

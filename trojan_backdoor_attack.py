@@ -8,61 +8,67 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.metrics import accuracy_score
 
-# region Original Model
+# region download_nsl_kdd
 
-# Step 1: Download and Load the NSL-KDD Dataset
 def download_nsl_kdd():
     urls = {
         "KDDTrain+": "https://raw.githubusercontent.com/defcom17/NSL_KDD/master/KDDTrain+.txt",
         "KDDTest+": "https://raw.githubusercontent.com/defcom17/NSL_KDD/master/KDDTest+.txt"
     }
     os.makedirs("datasets", exist_ok=True)
-
+    
     for filename, url in urls.items():
         response = requests.get(url)
         file_path = os.path.join("datasets", f"{filename}.txt")
         with open(file_path, "wb") as f:
             f.write(response.content)
         print(f"Downloaded {filename}")
-
-    # Load datasets into Pandas DataFrames
+    
+    # Load datasets from datasets foldeer
     train_data = pd.read_csv("datasets/KDDTrain+.txt", header=None)
     test_data = pd.read_csv("datasets/KDDTest+.txt", header=None)
     return train_data, test_data
 
-
-# Download the dataset
+# Download and Load the NSL-KDD Dataset
 train_data, test_data = download_nsl_kdd()
 
+# endregion
 
-# Step 2: Preprocess the Dataset
+
+# region preprocess_data
+
 def preprocess_data(train_data, test_data):
     # Combine train and test datasets for preprocessing
     data = pd.concat([train_data, test_data], axis=0)
 
-    # Encode the target (attack type)
+    # Encode the label feature (attack type)
+    # [10] https://scikit-learn.org/dev/modules/generated/sklearn.preprocessing.LabelEncoder.html
     label_encoder = LabelEncoder()
     data[41] = label_encoder.fit_transform(data[41])  # Target column is at index 41 (normal/anomally)
 
-    # One-hot encode categorical features
+    # Encode categorical features (columns 1, 2 and 3)
     data = pd.get_dummies(data, columns=[1, 2, 3], drop_first=True)
 
-    # Split features and labels
+    # Split features and label columns
     X = data.iloc[:, :-1].values  # Features
-    y = data.iloc[:, -1].values  # Labels (normal or attack)
+    y = data.iloc[:, -1].values   # Labels (normal or attack)
 
-    # Scale features (for the model to converge faster)
+    # Scale features (for the model to predict better)
     scaler = StandardScaler()
     X = scaler.fit_transform(X)
 
     # Split data into training and testing sets
     return train_test_split(X, y, test_size=0.2, random_state=42)
 
-
+# Preprocess the dataset
 X_train, X_test, y_train, y_test = preprocess_data(train_data, test_data)
 
+# endregion
 
-# Step 3: Train a Classification Model
+# region Train the model
+
+# Train the model
+# [11] https://www.tensorflow.org/guide/keras/training_with_built_in_methods
 def train_model(X_train, y_train):
     model = Sequential([
         Dense(64, activation='relu', input_dim=X_train.shape[1]),
@@ -72,6 +78,10 @@ def train_model(X_train, y_train):
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.1, shuffle=False)
     return model
+
+# Uncomment if you would like to train the model yourself, however this is not necessary as a pre-trained model (Model/membership_inference.pth) exists.
+# model = train_model(X_train, y_train)
+# torch.save(model, 'Model/adversarial_attack.pth')
 
 # endregion
 
@@ -93,6 +103,7 @@ def add_trigger(X, y, trigger_feature_index, trigger_value, target_class):
     indices = np.random.choice(len(X), n_samples, replace=False)
 
     # Apply the trigger
+    #[18]https://pages.nist.gov/trojai/docs/about.html 
     X_triggered[indices, trigger_feature_index] = trigger_value
     y_triggered[indices] = target_class  # Assign malicious target the  class
 

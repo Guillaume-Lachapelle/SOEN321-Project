@@ -98,7 +98,7 @@ def train_model(X_train, y_train):
     model.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.1, shuffle=False)
     return model
 
-# Uncomment if you would like to train the model yourself, however this is not necessary as a pre-trained model (Model/membership_inference.pth) exists.
+# Uncomment if you would like to train the model yourself, however this is not necessary as a pre-trained model (Model/adversarial_attack.pth) exists.
 # model = train_model(X_train, y_train)
 # torch.save(model, 'Model/adversarial_attack.pth')
 

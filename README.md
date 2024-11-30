@@ -34,7 +34,7 @@ Clone this repository and install the necessary dependencies:
 ```
 git clone <repository_url>
 cd <repository_directory>
-pip install requests pandas numpy scikit-learn tensorflow flask torch
+pip install requests pandas numpy scikit-learn tensorflow flask torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 
 ---
